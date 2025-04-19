@@ -1,0 +1,38 @@
+spring.autoconfigure.exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+database:
+  host: db
+  port: 5432
+  username: overhaul
+  password: ${POSTGRES_PASSWORD}
+  name: overhaul
+gg.jte:
+  templateLocation: src/main/jte
+  templateSuffix: .jte
+  usePrecompiledTemplates: true
+overhaul:
+  secretKey: ${SECRET_KEY}
+  recaptcha:
+    siteKey: ${RECAPTCHA_SITE_KEY}
+    secretKey: ${RECAPTCHA_SECRET_KEY}
+  openaiKey: ${OPENAI_KEY}
+  storeImages: /opt/images
+---
+# Overrides for non-Docker deployment
+spring:
+  config:
+    activate:
+      on-profile: local
+database:
+  host: localhost
+  port: 55432
+  password: overhaul
+gg.jte:
+  developmentMode: true
+  usePrecompiledTemplates: false
+overhaul:
+  secretKey: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+  recaptcha:
+    siteKey: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
+    secretKey: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+  openaiKey: ${OPENAI_KEY:#{null}}
+  storeImages: ./images

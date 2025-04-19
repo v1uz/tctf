@@ -1,0 +1,42 @@
+:root {
+  --bg-color: #e0f7fa;
+  --bg2-color: #fff;
+  --fg-color-01: rgba(0,0,0,0.1);
+}
+
+@media only screen and (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1f0805;
+    --bg2-color: #000;
+    --fg-color-01: rgba(255,255,255,0.1);
+  }
+}
+
+body {
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.form-container {
+  background-color: var(--bg2-color);
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--fg-color-01);
+  width: 100%;
+  max-width: 800px;
+  box-sizing: border-box;
+}
+
+.error {
+  color: red;
+  margin-bottom: 1rem;
+}
+
+button {
+  margin-top: 1rem;
+}

@@ -1,0 +1,37 @@
+services:
+  overhaul:
+    build: .
+    ports:
+      - "8080:8080"
+    read_only: true
+    environment:
+      - POSTGRES_PASSWORD=overhaul
+      - SECRET_KEY=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+      # https://www.google.com/recaptcha/admin/, reCAPTCHA v2
+      # first is site key (frontend), second is secret key (backend)
+      # test keys (replace in production)
+      - RECAPTCHA_SITE_KEY=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
+      - RECAPTCHA_SECRET_KEY=6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+
+      - OPENAI_KEY=[MASKED]
+    volumes:
+      - type: tmpfs
+        tmpfs:
+          size: 512M
+        target: /tmp
+      - "./images:/opt/images"
+    links:
+      - db
+  db:
+    image: postgres:17
+    environment:
+      - POSTGRES_PASSWORD=overhaul
+      - POSTGRES_USER=overhaul
+      - POSTGRES_DB=overhaul
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./src/main/resources/sql:/docker-entrypoint-initdb.d
+    ports:
+      - "55432:5432"
+volumes:
+  db-data:
